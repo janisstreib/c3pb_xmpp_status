@@ -26,6 +26,7 @@ class Subraum(ClientXMPP):
             return self.last_state
 
         r = requests.get('https://www.c3pb.de')
+        self.last_check = time.time()
         if "fa fa-toggle-off" in r.text:
             self.last_state = False
         else:
