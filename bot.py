@@ -25,12 +25,9 @@ class Subraum(ClientXMPP):
         if self.last_check + 60 > time.time():
             return self.last_state
 
-        r = requests.get('https://www.c3pb.de')
+        r = requests.get('https://www.c3pb.de/uptime.json')
         self.last_check = time.time()
-        if "fa fa-toggle-off" in r.text:
-            self.last_state = False
-        else:
-            self.last_state = True
+        self.last_state = 'open' == r.json()['state'].lower()
         return self.last_state
 
     @staticmethod
